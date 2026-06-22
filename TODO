@@ -1,1 +1,16 @@
-Change ARDUINO.H to normal cpp files
+!--- HARDWARE ---!
+1. Make the buttons less wide
+2. Find battery and power suply
+3. Change display to better 
+4. powered joy for 5v.
+5. Added 2 buttons for top panel.
+6. 
+
+!--- SOFTVARE ---!
+1. Change ARDUINO.H to normal cpp files
+2. Write all test for testing system
+3. Write systemd service runned joystick
+4. Create kiosk mode
+5. Write own desctop
+6. Write sound settings
+7. 
