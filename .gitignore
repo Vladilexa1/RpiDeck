@@ -1,1 +1,19 @@
 .vscode
+#Qt files
+qt/PiDeck/build/
+qt/PiDeck/.qtcreator/
+CMakeLists.txt.user
+*.user
+build/
+build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.moc
+*.qmlc
+*.jsc
