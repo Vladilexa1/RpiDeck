@@ -22,12 +22,12 @@ qt_add_qml_module(appPiDeck
         Icon.qml
         NavigationPanel.qml
         TopPanel.qml
-        AppLayer.qml
-        AppTile.qml
+        mainPage/AppLayer.qml
+        mainPage/AppTile.qml
         models/AppTileModel.qml
         NavTile.qml
         NavigationIcon.qml
-        CentreMainLayer.qml
+        mainPage/CentreMainLayer.qml
         settingsPage/SettingsPage.qml
         GamePage.qml
         settingsPage/SettingsTile.qml
@@ -37,10 +37,13 @@ qt_add_qml_module(appPiDeck
         settingsPage/panels/BluetoothPanel.qml
         settingsPage/panels/DisplayPanel.qml
         settingsPage/panels/SystemPanel.qml
+        settingsPage/SettingRow.qml
+        settingsPage/SettingsSlider.qml
         models/WifiModel.qml
         models/BluetoothModel.qml
-        NetworkTile.qml
-        BluetoothTile.qml
+        settingsPage/NetworkTile.qml
+        settingsPage/BluetoothTile.qml
+        shutdownPage/PowerOverlay.qml
         RESOURCES
             icons/power.svg
             icons/app.svg
@@ -64,6 +67,8 @@ qt_add_qml_module(appPiDeck
             icons/bluetooth.svg
             icons/display.svg
             icons/about.svg
+            icons/reboot.svg
+            icons/sleep.svg
             fonts/ChakraPetch-Regular.ttf
             fonts/ChakraPetch-Bold.ttf
 )

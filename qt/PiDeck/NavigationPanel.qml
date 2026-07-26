@@ -3,8 +3,6 @@ import QtQuick
 Item {
     id: bottomLine
     height: 50
-
-    // страница задаёт свой набор подсказок
     property var actions: []
 
     Rectangle {

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import PiDeck
 
 Window {
     id: win
@@ -17,7 +18,6 @@ Window {
         popEnter: Transition {}
         popExit: Transition {}
     }
-
     Component {
         id: homePage
         Page {
@@ -31,7 +31,6 @@ Window {
                 ]
             }
 
-
             CentreMainLayer {
                 anchors.top: parent.top
                 anchors.bottom: appLayer.top
@@ -40,6 +39,7 @@ Window {
                 anchors.right: parent.right
                 tile: appLayer.currentData
             }
+
             AppLayer {
                 id: appLayer
                 anchors.left: parent.left
@@ -49,15 +49,27 @@ Window {
                 Component.onCompleted: forceActiveFocus()
                 Keys.onReturnPressed: openCurrent()
                 Keys.onPressed: (e) => { if (e.key === Qt.Key_Space) openCurrent() }
+
                 function openCurrent() {
-                    if (currentData && currentData.label === "settings")
+                    if (!currentData) return
+                    if (currentData.label === "settings")
                         stack.push("settingsPage/SettingsPage.qml")
-                    if (currentData && currentData.label === "game")
+                    else if (currentData.label === "game")
                         stack.push("GamePage.qml")
-                    if (currentData && currentData.label === "terminal")
+                    else if (currentData.label === "terminal")
                         stack.push("GamePage.qml")
+                    else if (currentData.label === "shutdown")
+                        power.active = true
                 }
             }
         }
+    }
+    PowerOverlay {
+        id: power
+        onShutdown: console.log("→ systemctl poweroff")
+        onReboot:   console.log("→ systemctl reboot")
+        onSleep:    console.log("→ systemctl suspend")
+        onActiveChanged: if (!active && stack.currentItem)
+                             stack.currentItem.forceActiveFocus()
     }
 }
