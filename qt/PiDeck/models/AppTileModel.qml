@@ -13,15 +13,6 @@ ListModel{
         description: "Every game in one place — retro emulation through RetroPie, PC titles streamed over Moonlight or Steam Link, and native Linux & indie builds. One grid, one controller."
     }
     ListElement{
-        label: "settings"
-        img: "qrc:/qt/qml/PiDeck/icons/settings.svg"
-        colorGlow: "#40387d"
-        category: "SYSTEM"
-        shortDescription: "SETTINGS"
-        subtitle: "Wi-Fi · Bluetooth · Display · System"
-        description: "Connect to Wi-Fi and Bluetooth, tune the display and check system health — all built for the gamepad, no mouse required."
-    }
-    ListElement{
         label: "music"
         img: "qrc:/qt/qml/PiDeck/icons/music.svg"
         colorGlow: "#653071"
@@ -56,6 +47,15 @@ ListModel{
         shortDescription: "TERMINAL"
         subtitle: "bash · pi@deck"
         description: "Drop straight into a shell for tinkering — package installs, service control and the odd git pull, with the radial on-screen keyboard."
+    }
+    ListElement{
+        label: "settings"
+        img: "qrc:/qt/qml/PiDeck/icons/settings.svg"
+        colorGlow: "#40387d"
+        category: "SYSTEM"
+        shortDescription: "SETTINGS"
+        subtitle: "Wi-Fi · Bluetooth · Display · System"
+        description: "Connect to Wi-Fi and Bluetooth, tune the display and check system health — all built for the gamepad, no mouse required."
     }
     ListElement{
         label: "shutdown"
