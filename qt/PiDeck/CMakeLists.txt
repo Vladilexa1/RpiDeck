@@ -20,11 +20,21 @@ qt_add_qml_module(appPiDeck
         TopPanel.qml
         AppLayer.qml
         AppTile.qml
-        AppTileModel.qml
+        models/AppTileModel.qml
         NavTile.qml
         NavigationIcon.qml
         CentreMainLayer.qml
-
+        settingsPage/SettingsPage.qml
+        GamePage.qml
+        settingsPage/SettingsTile.qml
+        settingsPage/SettingsTileModel.qml
+        settingsPage/panels/WifiPanel.qml
+        settingsPage/panels/AboutPanel.qml
+        settingsPage/panels/BluetoothPanel.qml
+        settingsPage/panels/DisplayPanel.qml
+        settingsPage/panels/SystemPanel.qml
+        models/WifiModel.qml
+        NetworkTile.qml
         RESOURCES
             icons/power.svg
             icons/app.svg
@@ -41,11 +51,18 @@ qt_add_qml_module(appPiDeck
             icons/wifi-full.svg
             icons/wifi-midle.svg
             icons/wifi-low.svg
+            icons/right.svg
+            icons/back.svg
             icons/wifi-zero.svg
+            icons/lock.svg
+            icons/bluetooth.svg
+            icons/display.svg
+            icons/about.svg
             fonts/ChakraPetch-Regular.ttf
             fonts/ChakraPetch-Bold.ttf
-            QML_FILES SettingsPage.qml
-            QML_FILES GamePage.qml
+            QML_FILES models/BluetoothModel.qml
+            QML_FILES BluetoothTile.qml
+
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

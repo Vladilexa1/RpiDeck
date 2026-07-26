@@ -44,7 +44,7 @@ Window {
                 Keys.onPressed: (e) => { if (e.key === Qt.Key_Space) openCurrent() }
                 function openCurrent() {
                     if (currentData && currentData.label === "settings")
-                        stack.push("SettingsPage.qml")
+                        stack.push("settingsPage/SettingsPage.qml")
                     if (currentData && currentData.label === "game")
                         stack.push("GamePage.qml")
                     if (currentData && currentData.label === "terminal")
