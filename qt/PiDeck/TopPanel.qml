@@ -33,7 +33,7 @@ Item {
             }
             Text{
                 text: new Date().toLocaleString(Qt.locale(""), "ddd, MMMM dd")
-                color: "#9094a0"
+                color: Theme.textMuted
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 18
             }
@@ -42,13 +42,13 @@ Item {
             width: 12
             height: 12
             radius: 6
-            color: "#ff961f"
+            color: Theme.accent
             Text{
                 text: "PiDECK"
                 anchors.left: parent.right
                 anchors.leftMargin: 6
                 anchors.verticalCenter: parent.verticalCenter
-                color: "#9094a0"
+                color: Theme.textMuted
                 font.pixelSize: 14
             }
             anchors.centerIn: parent
@@ -71,7 +71,7 @@ Item {
                 }
                 Text{
                     text: topPanel.tempCPU + "°C"
-                    color: "#9094a0"
+                    color: Theme.textMuted
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 18
                 }
@@ -89,7 +89,7 @@ Item {
                 }
                 Text{
                     text: topPanel.wifiName
-                    color: "#9094a0"
+                    color: Theme.textMuted
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 18
                 }
@@ -107,7 +107,7 @@ Item {
                 }
                 Text{
                     text: topPanel.battStatus + "%"
-                    color: "#9094a0"
+                    color: Theme.textMuted
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 18
                 }

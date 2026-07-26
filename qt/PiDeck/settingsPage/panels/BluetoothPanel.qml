@@ -9,12 +9,10 @@ FocusScope {
     property bool interactive: true
     property bool bluetoothActive: false
 
-    // подпись кнопки A — теперь только про устройство
     property string actionLabel: bluetooth.currentData
                                 ? (bluetooth.currentData.connected ? "Disconnect" : "Connect")
                                 : ""
 
-    // подпись кнопки X — про радио. Пустая строка = кнопки нет
     property string toggleLabel: panel.bluetoothActive ? "Turn off" : "Turn on"
 
     focus: true
@@ -43,14 +41,12 @@ FocusScope {
                     bluetooth.currentData.connected ? "→ disconnect" : "→ connect")
     }
 
-    // фокус следует за состоянием радио
     onBluetoothActiveChanged: {
         if (panel.bluetoothActive)
             bluetooth.forceActiveFocus()
         else
             panel.forceActiveFocus()
     }
-    // ── шапка ──
     Item {
         id: head
         anchors.top: parent.top
@@ -71,14 +67,13 @@ FocusScope {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: panel.bluetoothActive ? "on" : "off"
-            color: panel.bluetoothActive ? "#ff961f" : "#6f7480"
+            color: panel.bluetoothActive ? Theme.accent : Theme.textDim
             font.pixelSize: 14
             font.family: "monospace"
             Behavior on color { ColorAnimation { duration: 150 } }
         }
     }
 
-    // ── список устройств ──
     ListView {
         id: bluetooth
 
@@ -117,11 +112,10 @@ FocusScope {
         }
     }
 
-    // ── заглушка при выключенном Bluetooth ──
     Text {
         anchors.centerIn: parent
-        text: "Bluetooth is off · press A to turn on"
-        color: "#6f7480"
+        text: "Bluetooth is off · press X to turn on"
+        color: Theme.textDim
         font.pixelSize: 16
         font.family: "monospace"
         visible: !panel.bluetoothActive

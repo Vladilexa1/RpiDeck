@@ -23,7 +23,14 @@ Window {
         Page {
             Rectangle { anchors.fill: parent; color: "black" }
             header: TopPanel { id: topPanel }
-            footer: NavigationPanel {}
+            footer: NavigationPanel {
+                actions: [
+                    { label: "Navigate", icon: "◀ ▶" },
+                    { label: "Launch",   icon: "A" },
+                    { label: "Tweaks",   icon: "≡" }
+                ]
+            }
+
 
             CentreMainLayer {
                 anchors.top: parent.top

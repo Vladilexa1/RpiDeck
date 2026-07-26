@@ -69,13 +69,12 @@ FocusScope {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: panel.wifiActive ? networks.count + " networks" : "off"
-            color: panel.wifiActive ? "#6f7480" : "#6f7480"
+            color: Theme.textDim
             font.pixelSize: 14
             font.family: "monospace"
         }
     }
 
-    // ── список сетей ──
     ListView {
         id: networks
 
@@ -115,11 +114,10 @@ FocusScope {
         }
     }
 
-    // ── заглушка ──
     Text {
         anchors.centerIn: parent
         text: "Wi-Fi is off · press X to turn on"
-        color: "#6f7480"
+        color: Theme.textDim
         font.pixelSize: 16
         font.family: "monospace"
         visible: !panel.wifiActive

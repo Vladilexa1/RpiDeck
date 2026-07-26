@@ -5,9 +5,9 @@ Rectangle{
     id: launch
     width: launchText.width + 10
     height: launchText.height + 4
-    color: Qt.rgba(255, 255, 255, 0.07)
+    color: Qt.rgba(1, 1, 1, 0.07)
     radius: 5
-    border.color: Qt.rgba(255, 255, 255, 0.09)
+    border.color: Theme.hairline
     border.width: 2
     Text{
         id: launchText

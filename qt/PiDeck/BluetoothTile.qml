@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Effects
 
 Item {
     id: tile
@@ -16,38 +15,24 @@ Item {
         radius: 12
         color: tile.selected ? Qt.rgba(1, 1, 1, 0.05) : Qt.rgba(1, 1, 1, 0.02)
         border.width: 2
-        border.color: tile.selected ? "#ff961f" : "transparent"
+        border.color: tile.selected ? Theme.accent : "transparent"
         gradient: tile.selected ? gradSelected : null
 
         Behavior on color        { ColorAnimation { duration: 120 } }
         Behavior on border.color { ColorAnimation { duration: 120 } }
-
-        // ── левая группа: иконка + названия ──
         Row {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.right: parent.right
-            anchors.rightMargin: 170        // место под бейдж и полоски
+            anchors.rightMargin: 170
             anchors.verticalCenter: parent.verticalCenter
             spacing: 14
 
-            Image {
-                id: bluetoothIcon
+            Icon {
                 source: "qrc:/qt/qml/PiDeck/icons/bluetooth.svg"
-                sourceSize: Qt.size(64, 64)
                 width: 26; height: 26
-                fillMode: Image.PreserveAspectFit
                 anchors.verticalCenter: parent.verticalCenter
-                layer.enabled: true
-                visible: false
-            }
-            MultiEffect {
-                source: bluetoothIcon
-                width: bluetoothIcon.width
-                height: bluetoothIcon.height
-                anchors.verticalCenter: parent.verticalCenter
-                colorization: 1.0
-                colorizationColor: tile.connected ? "#ff961f" : "#9094a0"
+                color: tile.connected ? Theme.accent : Theme.textMuted
             }
 
             Column {
@@ -65,14 +50,12 @@ Item {
 
                 Text {
                     text: tile.connected ? "connected" : ""
-                    color: "#6f7480"
+                    color: Theme.textDim
                     font.pixelSize: 14
                     font.family: "monospace"
                 }
             }
         }
-
-        // ── правая группа: бейдж + уровень сигнала ──
         Row {
             anchors.right: parent.right
             anchors.rightMargin: 16
@@ -86,52 +69,39 @@ Item {
                 radius: 6
                 color: "transparent"
                 border.width: 1
-                border.color: "#ff961f"
+                border.color: Theme.accent
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
                     id: badgeText
                     anchors.centerIn: parent
                     text: "CONNECTED"
-                    color: "#ff961f"
+                    color: Theme.accent
                     font.pixelSize: 11
                     font.letterSpacing: 1
                     font.family: "monospace"
                 }
             }
 
-            // полоски сигнала: 4 прямоугольника растущей высоты
             Row {
                 spacing: 6
                 anchors.verticalCenter: parent.verticalCenter
-                visible: tile.battery > 0        // не все устройства сообщают заряд
+                visible: tile.battery > 0
 
-                Image {
-                    id: battIcon
+                Icon {
                     source: tile.battery >= 60 ? "qrc:/qt/qml/PiDeck/icons/batt-full.svg"
                           : tile.battery >= 25 ? "qrc:/qt/qml/PiDeck/icons/batt-midle.svg"
                           :                      "qrc:/qt/qml/PiDeck/icons/batt-low.svg"
-                    sourceSize: Qt.size(64, 64)
                     width: 24; height: 24
-                    fillMode: Image.PreserveAspectFit
                     anchors.verticalCenter: parent.verticalCenter
-                    layer.enabled: true
-                    visible: false
-                }
-                MultiEffect {
-                    source: battIcon
-                    width: battIcon.width
-                    height: battIcon.height
-                    anchors.verticalCenter: parent.verticalCenter
-                    colorization: 1.0
-                    colorizationColor: tile.battery < 20 ? "#ff5c5c"
-                                     : tile.connected   ? "#ff961f" : "#9094a0"
-                    Behavior on colorizationColor { ColorAnimation { duration: 150 } }
+                    color: tile.battery < 20 ? Theme.danger
+                         : tile.connected   ? Theme.accent : Theme.textMuted
+                    animateColor: true
                 }
 
                 Text {
                     text: tile.battery + "%"
-                    color: tile.battery < 20 ? "#ff5c5c" : "#9094a0"
+                    color: tile.battery < 20 ? Theme.danger : Theme.textMuted
                     font.pixelSize: 13
                     font.family: "monospace"
                     anchors.verticalCenter: parent.verticalCenter
@@ -142,7 +112,7 @@ Item {
 
     Gradient {
         id: gradSelected
-        GradientStop { position: 0.0; color: Qt.rgba(1.0, 150/255, 31/255, 0.18) }
+        GradientStop { position: 0.0; color: Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0.18) }
         GradientStop { position: 1.0; color: "transparent" }
     }
 }

@@ -1,22 +1,23 @@
 import QtQuick
-Item {
 
+Item {
     id: navTile
     width: row.width
     height: 50
     property string label: ""
-    property Component iconComponent: null
-    Row{
+    property string icon: ""
+
+    Row {
         id: row
         anchors.verticalCenter: parent.verticalCenter
         spacing: 8
-        Loader {
-            sourceComponent: navTile.iconComponent
+        NavigationIcon {
+            label: navTile.icon
             anchors.verticalCenter: parent.verticalCenter
         }
-        Text{
+        Text {
             text: navTile.label
-            color: "#9094a0"
+            color: Theme.textMuted
             anchors.verticalCenter: parent.verticalCenter
         }
     }

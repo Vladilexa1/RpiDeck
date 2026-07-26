@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Effects
 import PiDeck
 
 Page {
@@ -9,7 +8,28 @@ Page {
     Rectangle { anchors.fill: parent; color: "black" }
 
     header: TopPanel { id: topPanel }
-    footer: NavigationPanel {}
+    footer: NavigationPanel {
+        actions: {
+            if (!rightPane.activeFocus)
+                return [
+                    { label: "Navigate", icon: "▲ ▼" },
+                    { label: "Open",     icon: "A" },
+                    { label: "Back",     icon: "B" }
+                ]
+
+            let a = []
+            a.push({ label: "Navigate", icon: "▲ ▼" })
+
+            if (pageLoader.item && pageLoader.item.actionLabel)
+                a.push({ label: pageLoader.item.actionLabel, icon: "A" })
+
+            if (pageLoader.item && pageLoader.item.toggleLabel)
+                a.push({ label: pageLoader.item.toggleLabel, icon: "X" })
+
+            a.push({ label: "Back", icon: "B" })
+            return a
+        }
+    }
 
     Keys.onEscapePressed: {
         if (rightPane.activeFocus)
@@ -37,29 +57,17 @@ Page {
                 width: 60
                 height: 60
                 radius: 20
-                color: Qt.rgba(255, 255, 255, 0.045)
+                color: Theme.tileBg
                 gradient: gradientSelcted
                 border.width: 1
-                border.color: "#ff961f"
+                border.color: Theme.accent
 
-                Image {
-                    id: icon
+                Icon {
                     source: "qrc:/qt/qml/PiDeck/icons/settings.svg"
-                    sourceSize.width: 120
-                    sourceSize.height: 120
-                    width: 35
-                    height: 35
-                    fillMode: Image.PreserveAspectFit
+                    sourceSize: 120
+                    width: 35; height: 35
                     anchors.centerIn: parent
-                    layer.enabled: true
-                }
-
-                MultiEffect {
-                    source: icon
-                    anchors.fill: icon
-                    colorization: 1.0
-                    colorizationColor: "#ff961f"
-                    Behavior on colorizationColor { ColorAnimation { duration: 150 } }
+                    color: Theme.accent
                 }
             }
 
@@ -75,7 +83,7 @@ Page {
 
                 Text {
                     text: "Wi-Fi"
-                    color: "#9094a0"
+                    color: Theme.textMuted
                     font.pixelSize: 16
                 }
             }
@@ -134,7 +142,7 @@ Page {
                     radius: 20
                     color: Qt.rgba(1, 1, 1, 0.03)
                     border.width: 1
-                    border.color: rightPane.activeFocus ? "#ff961f" : Qt.rgba(1, 1, 1, 0.07)
+                    border.color: rightPane.activeFocus ? Theme.accent : Qt.rgba(1, 1, 1, 0.07)
                     Behavior on border.color { ColorAnimation { duration: 50 } }
 
                     Loader {
@@ -156,7 +164,7 @@ Page {
 
     Gradient {
         id: gradientSelcted
-        GradientStop { position: 0.0; color: Qt.rgba(255/255, 150/255, 31/255, 0.3) }
-        GradientStop { position: 1.0; color: Qt.rgba(0, 0, 0, 0) }
+        GradientStop { position: 0.0; color: Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0.3) }
+        GradientStop { position: 1.0; color: "transparent" }
     }
 }

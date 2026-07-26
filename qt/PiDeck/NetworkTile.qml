@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Effects
 
 Item {
     id: tile
@@ -17,38 +16,25 @@ Item {
         radius: 12
         color: tile.selected ? Qt.rgba(1, 1, 1, 0.05) : Qt.rgba(1, 1, 1, 0.02)
         border.width: 2
-        border.color: tile.selected ? "#ff961f" : "transparent"
+        border.color: tile.selected ? Theme.accent : "transparent"
         gradient: tile.selected ? gradSelected : null
 
         Behavior on color        { ColorAnimation { duration: 120 } }
         Behavior on border.color { ColorAnimation { duration: 120 } }
 
-        // ── левая группа: иконка + названия ──
         Row {
             anchors.left: parent.left
             anchors.leftMargin: 16
             anchors.right: parent.right
-            anchors.rightMargin: 170        // место под бейдж и полоски
+            anchors.rightMargin: 170
             anchors.verticalCenter: parent.verticalCenter
             spacing: 14
 
-            Image {
-                id: wifiIcon
+            Icon {
                 source: "qrc:/qt/qml/PiDeck/icons/wifi-full.svg"
-                sourceSize: Qt.size(64, 64)
                 width: 26; height: 26
-                fillMode: Image.PreserveAspectFit
                 anchors.verticalCenter: parent.verticalCenter
-                layer.enabled: true
-                visible: false
-            }
-            MultiEffect {
-                source: wifiIcon
-                width: wifiIcon.width
-                height: wifiIcon.height
-                anchors.verticalCenter: parent.verticalCenter
-                colorization: 1.0
-                colorizationColor: tile.connected ? "#ff961f" : "#9094a0"
+                color: tile.connected ? Theme.accent : Theme.textMuted
             }
 
             Column {
@@ -68,7 +54,7 @@ Item {
                         width: 13; height: 13
                         fillMode: Image.PreserveAspectFit
                         anchors.verticalCenter: parent.verticalCenter
-                        opacity: 0.55           // белый SVG + прозрачность = серый
+                        opacity: 0.55
                         visible: tile.secured
                     }
                 }
@@ -76,14 +62,12 @@ Item {
                 Text {
                     text: tile.connected ? "connected · " + tile.ip
                                          : (tile.secured ? tile.security : "open")
-                    color: "#6f7480"
+                    color: Theme.textDim
                     font.pixelSize: 14
                     font.family: "monospace"
                 }
             }
         }
-
-        // ── правая группа: бейдж + уровень сигнала ──
         Row {
             anchors.right: parent.right
             anchors.rightMargin: 16
@@ -97,21 +81,19 @@ Item {
                 radius: 6
                 color: "transparent"
                 border.width: 1
-                border.color: "#ff961f"
+                border.color: Theme.accent
                 anchors.verticalCenter: parent.verticalCenter
 
                 Text {
                     id: badgeText
                     anchors.centerIn: parent
                     text: "CONNECTED"
-                    color: "#ff961f"
+                    color: Theme.accent
                     font.pixelSize: 11
                     font.letterSpacing: 1
                     font.family: "monospace"
                 }
             }
-
-            // полоски сигнала: 4 прямоугольника растущей высоты
             Row {
                 spacing: 3
                 height: 20
@@ -123,9 +105,9 @@ Item {
                         width: 4
                         height: 7 + index * 4
                         radius: 1
-                        anchors.bottom: parent.bottom       // вертикальные анкоры в Row можно
+                        anchors.bottom: parent.bottom
                         color: tile.level >= (index + 1) * 22
-                               ? "#ff961f" : Qt.rgba(1, 1, 1, 0.13)
+                               ? Theme.accent : Qt.rgba(1, 1, 1, 0.13)
                     }
                 }
             }
@@ -134,7 +116,7 @@ Item {
 
     Gradient {
         id: gradSelected
-        GradientStop { position: 0.0; color: Qt.rgba(1.0, 150/255, 31/255, 0.18) }
+        GradientStop { position: 0.0; color: Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0.18) }
         GradientStop { position: 1.0; color: "transparent" }
     }
 }

@@ -4,39 +4,37 @@ Item {
     id: bottomLine
     height: 50
 
-    Rectangle{
-        width: parent.width
-        height: parent.height
-        color: "#08090c"
-        Rectangle{
+    // страница задаёт свой набор подсказок
+    property var actions: []
+
+    Rectangle {
+        anchors.fill: parent
+        color: Theme.surface
+
+        Rectangle {
             width: parent.width
             height: 1
-            color: Qt.rgba(255, 255, 255, 0.09)
+            color: Theme.hairline
         }
-        Row{
+
+        Row {
             anchors.fill: parent
-            spacing: 10
             anchors.leftMargin: 20
-            NavTile{
-                label: "Navigate"
-                iconComponent: NavigationIcon{ label: "◀  ▶" }
-            }
-            NavTile{
-                label: "Launch"
-                iconComponent: NavigationIcon{ label: "L"}
-            }
-            NavTile{
-                label: "Back"
-                iconComponent: NavigationIcon { label: "B"}
-            }
-            NavTile{
-                label: "Tweacks"
-                iconComponent: NavigationIcon { label: "≡"}
+            spacing: 10
+
+            Repeater {
+                model: bottomLine.actions
+                NavTile {
+                    label: modelData.label
+                    icon: modelData.icon
+                    visible: modelData.label !== ""
+                }
             }
         }
-        Text{
+
+        Text {
             text: "PiDECK  ·  V0.3"
-            color: "#5d616d"
+            color: Theme.textFaint
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: parent.verticalCenter

@@ -12,10 +12,14 @@ qt_add_executable(appPiDeck
     main.cpp
 )
 
+set_source_files_properties(Theme.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
 qt_add_qml_module(appPiDeck
     URI PiDeck
     QML_FILES
         Main.qml
+        Theme.qml
+        Icon.qml
         NavigationPanel.qml
         TopPanel.qml
         AppLayer.qml
@@ -34,7 +38,9 @@ qt_add_qml_module(appPiDeck
         settingsPage/panels/DisplayPanel.qml
         settingsPage/panels/SystemPanel.qml
         models/WifiModel.qml
+        models/BluetoothModel.qml
         NetworkTile.qml
+        BluetoothTile.qml
         RESOURCES
             icons/power.svg
             icons/app.svg
@@ -60,9 +66,6 @@ qt_add_qml_module(appPiDeck
             icons/about.svg
             fonts/ChakraPetch-Regular.ttf
             fonts/ChakraPetch-Bold.ttf
-            QML_FILES models/BluetoothModel.qml
-            QML_FILES BluetoothTile.qml
-
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
