@@ -58,6 +58,8 @@ Window {
                         stack.push("GamePage.qml")
                     else if (currentData.label === "terminal")
                         stack.push("GamePage.qml")
+                    else if (currentData.label === "usb")
+                        usb.active = true
                     else if (currentData.label === "shutdown")
                         power.active = true
                 }
@@ -66,9 +68,11 @@ Window {
     }
     PowerOverlay {
         id: power
-        onShutdown: console.log("→ systemctl poweroff")
-        onReboot:   console.log("→ systemctl reboot")
-        onSleep:    console.log("→ systemctl suspend")
+        onActiveChanged: if (!active && stack.currentItem)
+                             stack.currentItem.forceActiveFocus()
+    }
+    UsbOverlay {
+        id: usb
         onActiveChanged: if (!active && stack.currentItem)
                              stack.currentItem.forceActiveFocus()
     }
