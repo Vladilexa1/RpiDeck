@@ -13,8 +13,17 @@ SelectOverlay {
     ]
 
     onChosen: (i) => {
-        if (i === 0)      console.log("→ systemctl poweroff")
-        else if (i === 1) console.log("→ systemctl reboot")
-        else              console.log("→ systemctl suspend")
+        if (i === 0) {
+            console.log("Shutting down...")
+            SystemController.poweroff()
+        }
+        else if (i === 1) {
+            console.log("Rebooting...")
+            SystemController.reboot()
+        }
+        else {
+            console.log("Suspending...")
+            SystemController.suspend()
+        }
     }
 }

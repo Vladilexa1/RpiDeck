@@ -8,74 +8,88 @@ find_package(Qt6 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
+file(GLOB_RECURSE QML_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
+     *.qml)
+file(GLOB_RECURSE QML_ASSETS  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS
+     icons/*.svg fonts/*.ttf images/*.png)
+
+list(FILTER QML_SOURCES EXCLUDE REGEX "^build")
+
 qt_add_executable(appPiDeck
     main.cpp
 )
 
 set_source_files_properties(Theme.qml PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
-
 qt_add_qml_module(appPiDeck
     URI PiDeck
-    QML_FILES
-        Main.qml
-        Theme.qml
-        Icon.qml
-        NavigationPanel.qml
-        TopPanel.qml
-        mainPage/AppLayer.qml
-        mainPage/AppTile.qml
-        models/AppTileModel.qml
-        NavTile.qml
-        NavigationIcon.qml
-        mainPage/CentreMainLayer.qml
-        settingsPage/SettingsPage.qml
-        GamePage.qml
-        settingsPage/SettingsTile.qml
-        settingsPage/SettingsTileModel.qml
-        settingsPage/panels/WifiPanel.qml
-        settingsPage/panels/AboutPanel.qml
-        settingsPage/panels/BluetoothPanel.qml
-        settingsPage/panels/DisplayPanel.qml
-        settingsPage/panels/SystemPanel.qml
-        settingsPage/SettingRow.qml
-        settingsPage/SettingsSlider.qml
-        models/WifiModel.qml
-        models/BluetoothModel.qml
-        settingsPage/NetworkTile.qml
-        settingsPage/BluetoothTile.qml
-        shutdownPage/PowerOverlay.qml
-        usbPage/UsbOverlay.qml
-        RESOURCES
-            icons/power.svg
-            icons/app.svg
-            icons/usb.svg
-            icons/browser.svg
-            icons/music.svg
-            icons/settings.svg
-            icons/term.svg
-            icons/cpu.svg
-            icons/batt-full.svg
-            icons/batt-midle.svg
-            icons/batt-low.svg
-            icons/batt-charg.svg
-            icons/wifi-full.svg
-            icons/wifi-midle.svg
-            icons/wifi-low.svg
-            icons/right.svg
-            icons/back.svg
-            icons/wifi-zero.svg
-            icons/lock.svg
-            icons/bluetooth.svg
-            icons/display.svg
-            icons/about.svg
-            icons/reboot.svg
-            icons/sleep.svg
-            fonts/ChakraPetch-Regular.ttf
-            fonts/ChakraPetch-Bold.ttf
-            QML_FILES SelectOverlay.qml
-            QML_FILES GameTile.qml
-            QML_FILES models/GameTileModel.qml
+    QML_FILES ${QML_SOURCES}
+    RESOURCES ${QML_ASSETS}
+    SOURCES system_controller.h
 )
+# qt_add_qml_module(appPiDeck
+#     URI PiDeck
+#     QML_FILES
+#         Main.qml
+#         Theme.qml
+#         Icon.qml
+#         NavigationPanel.qml
+#         TopPanel.qml
+#         mainPage/AppLayer.qml
+#         mainPage/AppTile.qml
+#         models/AppTileModel.qml
+#         NavTile.qml
+#         NavigationIcon.qml
+#         mainPage/CentreMainLayer.qml
+#         settingsPage/SettingsPage.qml
+#         gamePage/GamePage.qml
+#         settingsPage/SettingsTile.qml
+#         settingsPage/SettingsTileModel.qml
+#         settingsPage/panels/WifiPanel.qml
+#         settingsPage/panels/AboutPanel.qml
+#         settingsPage/panels/BluetoothPanel.qml
+#         settingsPage/panels/DisplayPanel.qml
+#         settingsPage/panels/SystemPanel.qml
+#         settingsPage/SettingRow.qml
+#         settingsPage/SettingsSlider.qml
+#         models/WifiModel.qml
+#         models/BluetoothModel.qml
+#         settingsPage/NetworkTile.qml
+#         settingsPage/BluetoothTile.qml
+#         shutdownPage/PowerOverlay.qml
+#         usbPage/UsbOverlay.qml
+#         gamePage/GameTile.qml
+#         SelectOverlay.qml
+#         models/GameTileModel.qml
+#         RESOURCES
+#             icons/power.svg
+#             icons/app.svg
+#             icons/usb.svg
+#             icons/browser.svg
+#             icons/music.svg
+#             icons/settings.svg
+#             icons/term.svg
+#             icons/cpu.svg
+#             icons/batt-full.svg
+#             icons/batt-midle.svg
+#             icons/batt-low.svg
+#             icons/batt-charg.svg
+#             icons/wifi-full.svg
+#             icons/wifi-midle.svg
+#             icons/wifi-low.svg
+#             icons/right.svg
+#             icons/back.svg
+#             icons/wifi-zero.svg
+#             icons/lock.svg
+#             icons/bluetooth.svg
+#             icons/display.svg
+#             icons/about.svg
+#             icons/reboot.svg
+#             icons/sleep.svg
+#             fonts/ChakraPetch-Regular.ttf
+#             fonts/ChakraPetch-Bold.ttf
+#             images/test.png
+#             images/test2.png
+# )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

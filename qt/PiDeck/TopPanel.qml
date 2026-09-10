@@ -18,7 +18,7 @@ Item {
         width: parent.width
         height: parent.height
         gradient: Gradient{
-            GradientStop { position: 0.0; color: Qt.rgba(0, 0, 0, 55)}
+            GradientStop { position: 0.0; color: Qt.rgba(0, 0, 0, 88)}
             GradientStop { position: 1.0; color: Qt.rgba(0, 0, 0, 0)}
         }
         Row{

@@ -13,7 +13,7 @@ ListModel{
         description: "Every game in one place — retro emulation through RetroPie, PC titles streamed over Moonlight or Steam Link, and native Linux & indie builds. One grid, one controller."
     }
     ListElement{
-        label: "music"
+        label: "media"
         img: "qrc:/qt/qml/PiDeck/icons/music.svg"
         colorGlow: "#653071"
         category: "AUIDO"
@@ -38,15 +38,6 @@ ListModel{
         shortDescription: "SYSTEM TOOLS"
         subtitle: "Be a controller · drive · NIC · BadUSB"
         description: "Plug into any PC and have the console pretend to be something else — a gamepad, keyboard/mouse, USB drive, network adapter, serial console or a scripted HID."
-    }
-    ListElement{
-        label: "terminal"
-        img: "qrc:/qt/qml/PiDeck/icons/term.svg"
-        colorGlow: "#134e91"
-        category: "SYSTEM"
-        shortDescription: "TERMINAL"
-        subtitle: "bash · pi@deck"
-        description: "Drop straight into a shell for tinkering — package installs, service control and the odd git pull, with the radial on-screen keyboard."
     }
     ListElement{
         label: "settings"
