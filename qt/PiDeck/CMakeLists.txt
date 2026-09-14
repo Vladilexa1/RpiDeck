@@ -25,6 +25,8 @@ qt_add_qml_module(appPiDeck
     QML_FILES ${QML_SOURCES}
     RESOURCES ${QML_ASSETS}
     SOURCES system_controller.h
+    SOURCES network_controller.h
+    SOURCES network_controller.cpp
 )
 # qt_add_qml_module(appPiDeck
 #     URI PiDeck

@@ -7,11 +7,15 @@ FocusScope {
     signal exitLeft()
 
     property bool interactive: true
-    property bool wifiActive: false
 
-    property string actionLabel: networks.currentData
-                                ? (networks.currentData.connected ? "Disconnect" : "Connect")
-                                : ""
+    // состояние радио живёт в NetworkManager, а не в QML
+    readonly property bool wifiActive: NetworkController.radioEnabled
+
+    property string actionLabel: NetworkController.busy
+                                 ? "Working…"
+                                 : (networks.currentItem
+                                    ? (networks.currentItem.connected ? "Disconnect" : "Connect")
+                                    : "")
 
     property string toggleLabel: panel.wifiActive ? "Turn off" : "Turn on"
 
@@ -27,25 +31,50 @@ FocusScope {
         } else if (e.key === Qt.Key_X) {
             panel.toggleRadio()
             e.accepted = true
+        } else if (e.key === Qt.Key_R) {
+            NetworkController.rescan_networks()
+            e.accepted = true
         }
     }
 
     function toggleRadio() {
-        panel.wifiActive = !panel.wifiActive
+        NetworkController.set_radio_enabled(!NetworkController.radioEnabled)
     }
 
     function activateCurrent() {
-        if (!panel.wifiActive || !networks.currentData)
+        if (!panel.wifiActive || NetworkController.busy)
             return
-        console.log("activate:", networks.currentData.ssid,
-                    networks.currentData.connected ? "→ disconnect" : "→ connect")
+
+        let tile = networks.currentItem
+        if (!tile)
+            return
+
+        if (tile.connected)
+            NetworkController.disconnect_wifi(tile.ssid)
+        else
+            NetworkController.connect_to_wifi(tile.ssid, "")
+    }
+
+    Component.onCompleted: {
+        NetworkController.refresh_radio_state()
+        if (NetworkController.radioEnabled)
+            NetworkController.rescan_networks()
     }
 
     onWifiActiveChanged: {
         if (panel.wifiActive)
-            Qt.callLater(networks.forceActiveFocus)
-        else
-            panel.forceActiveFocus()
+            NetworkController.rescan_networks()
+        else if (panel.activeFocus)
+            panel.forceActiveFocus() // список скрыт — клавиши обрабатывает панель
+    }
+
+    // Опрос раз в 5 секунд. Режим auto: nmcli сам сканирует радио, когда кэш
+    // NetworkManager устаёт — форсировать чаще нельзя, один скан длится ~7 с.
+    Timer {
+        interval: 5000
+        repeat: true
+        running: panel.visible && panel.wifiActive && !NetworkController.busy
+        onTriggered: NetworkController.refresh_networks()
     }
 
     // ── шапка ──
@@ -68,7 +97,13 @@ FocusScope {
         Text {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            text: panel.wifiActive ? networks.count + " networks" : "off"
+            text: {
+                if (!panel.wifiActive)
+                    return "off"
+                if (NetworkController.scanning)
+                    return "scanning…"
+                return networks.count + " networks"
+            }
             color: Theme.textDim
             font.pixelSize: 14
             font.family: "monospace"
@@ -82,9 +117,13 @@ FocusScope {
         anchors.topMargin: 8
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.bottom: error.top
+        anchors.bottomMargin: error.visible ? 8 : 0
 
         visible: panel.wifiActive
+        // фокус отдаётся списку биндингом: состояние радио приходит из
+        // NetworkManager асинхронно, в том числе до перехода в правую панель
+        focus: panel.wifiActive
         clip: true
         spacing: 8
         keyNavigationWraps: true
@@ -95,10 +134,7 @@ FocusScope {
         preferredHighlightBegin: 84
         preferredHighlightEnd: height - 84
 
-        property var currentData: (currentIndex >= 0 && currentIndex < count)
-                                  ? model.get(currentIndex) : null
-
-        model: WifiModel {}
+        model: NetworkController
 
         delegate: NetworkTile {
             required property var model
@@ -112,6 +148,29 @@ FocusScope {
             ip: model.ip
             selected: ListView.isCurrentItem && panel.activeFocus
         }
+    }
+
+    Text {
+        anchors.centerIn: parent
+        text: NetworkController.scanning ? "scanning…" : "no networks found · press R to rescan"
+        color: Theme.textDim
+        font.pixelSize: 16
+        font.family: "monospace"
+        visible: panel.wifiActive && networks.count === 0
+    }
+
+    Text {
+        id: error
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        text: NetworkController.lastError
+        visible: NetworkController.lastError !== ""
+        height: visible ? implicitHeight : 0
+        color: "#ff6b6b"
+        font.pixelSize: 13
+        font.family: "monospace"
+        wrapMode: Text.WordWrap
     }
 
     Text {

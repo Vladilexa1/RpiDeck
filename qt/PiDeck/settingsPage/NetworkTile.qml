@@ -3,6 +3,8 @@ import QtQuick
 Item {
     id: tile
 
+    implicitHeight: 70
+
     property string ssid: ""
     property bool   secured: false
     property int    level: 0
@@ -10,6 +12,8 @@ Item {
     property string security: ""
     property string ip: ""
     property bool   selected: false
+
+    signal clicked()
 
     Rectangle {
         anchors.fill: parent
@@ -118,5 +122,11 @@ Item {
         id: gradSelected
         GradientStop { position: 0.0; color: Qt.rgba(Theme.accent.r, Theme.accent.g, Theme.accent.b, 0.18) }
         GradientStop { position: 1.0; color: "transparent" }
+    }
+
+    // --- ДОБАВЛЕНО: невидимая область, которая ловит клик по всей плитке ---
+    MouseArea {
+        anchors.fill: parent
+        onClicked: tile.clicked()
     }
 }
