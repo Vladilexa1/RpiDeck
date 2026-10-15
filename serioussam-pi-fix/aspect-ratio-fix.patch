@@ -1,0 +1,47 @@
+--- a/SamTFE/Sources/SeriousSam/SeriousSam.cpp	2026-10-11 17:23:25.040801174 +0300
++++ b/SamTFE/Sources/SeriousSam/SeriousSam.cpp	2026-10-11 17:20:07.399346702 +0300
+@@ -566,7 +566,7 @@
+ {
+ 	if (pdp == NULL) return;
+ 	float ratio = (float)pdp->GetWidth() / (float)pdp->GetHeight();
+- 	if (ratio >= 1.32f && ratio <= 1.34f) 		//4:3
++ 	if (ratio >= 1.29f && ratio < 1.42f) 		//4:3 (и всё близкое)
+  	{
+ 		_fBigSizeJ					= 0.050f;
+ 		_fMediumSizeJ 				= 0.03f;	//medium font row size
+@@ -587,7 +587,7 @@
+ 		_fArmorHeightAdjuster		= 0.7f;
+ 		_fFragScorerHeightAdjuster	= 0.75f;
+         _fMenuPlayerProfileAdjuster = 0.38f;
+-	}else if (ratio >= 1.2f && ratio <= 1.26f) 		//5:4
++	}else if (ratio < 1.29f) 		//5:4 и уже
+  	{
+ 		_fBigSizeJ					= 0.050f;
+ 		_fMediumSizeJ 				= 0.03f;	//medium font row size
+@@ -608,7 +608,7 @@
+ 		_fArmorHeightAdjuster		= 0.7f;
+ 		_fFragScorerHeightAdjuster	= 0.75f;
+         _fMenuPlayerProfileAdjuster = 0.38f;
+- 	}else if (ratio >= 1.76f && ratio <= 1.78f) 	//16:9
++ 	}else if (ratio >= 1.69f && ratio < 2.05f) 	//16:9 (в т.ч. 1024x600)
+  	{
+ 		_fBigSizeJ					= 0.060f;
+ 		_fMediumSizeJ 				= 0.04f;	//medium font row size
+@@ -629,7 +629,7 @@
+ 		_fFragScorerHeightAdjuster	= 1.5f;
+ 		_fGlobalProfileFOVAdjuster	= 35.0f;
+         _fMenuPlayerProfileAdjuster = 0.35f;
+- 	}else if (ratio >= 1.5 && ratio <= 1.70) 	//16:10
++ 	}else if (ratio >= 1.42f && ratio < 1.69f) 	//16:10
+  	{
+ 		_fBigSizeJ					= 0.050f;
+ 		_fMediumSizeJ 				= 0.03f;	//medium font row size
+@@ -650,7 +650,7 @@
+ 		_fArmorHeightAdjuster		= 0.78f;
+ 		_fFragScorerHeightAdjuster	= 1.17f;
+         _fMenuPlayerProfileAdjuster = 0.32f;
+- 	}else if (ratio >= 2.32 && ratio <= 2.34) 	//21:9
++ 	}else if (ratio >= 2.05f) 	//21:9 и шире
+  	{
+ 		_fBigSizeJ					= 0.076f;
+ 		_fMediumSizeJ 				= 0.04f;	//medium font row size
